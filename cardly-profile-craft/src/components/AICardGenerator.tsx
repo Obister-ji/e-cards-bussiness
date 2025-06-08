@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Loader2, Sparkles, Wand2, Settings, CheckCircle, AlertCircle, RefreshCw } from "lucide-react";
 import { BusinessCard } from '@/types/types';
 import { useToast } from '@/hooks/use-toast';
-import { AIService } from '@/lib/aiService-simple';
+import { aiService } from '@/lib/aiService';
 
 interface AICardGeneratorProps {
   onGenerate: (card: BusinessCard) => void;
@@ -34,7 +34,7 @@ const AICardGenerator: React.FC<AICardGeneratorProps> = ({ onGenerate }) => {
   const [industry, setIndustry] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [customIndustry, setCustomIndustry] = useState("");
-  const [aiService] = useState(() => new AIService());
+  // Using the imported aiService instance
   const [providerInfo, setProviderInfo] = useState<{provider: string; configured: boolean; model?: string} | null>(null);
   const [lastGeneratedCard, setLastGeneratedCard] = useState<BusinessCard | null>(null);
   const [showRegenerateOption, setShowRegenerateOption] = useState(false);
@@ -78,7 +78,7 @@ const AICardGenerator: React.FC<AICardGeneratorProps> = ({ onGenerate }) => {
 
       toast({
         title: isRegeneration ? "Card Regenerated!" : "Card Generated!",
-        description: `Your AI-generated business card is ready to customize. ${providerInfo?.provider === 'openai' ? '(Powered by OpenAI)' : '(Enhanced Mock AI)'} ${isRegeneration ? 'Try regenerating again if needed.' : 'Not satisfied? Use the regenerate button.'}`,
+        description: `Your AI-generated business card is ready to customize. (Powered by ${providerInfo?.provider || '100% OpenAI'}) ${isRegeneration ? 'Try regenerating again if needed.' : 'Not satisfied? Use the regenerate button.'}`,
       });
     } catch (error) {
       console.error("AI generation error:", error);
@@ -124,15 +124,15 @@ const AICardGenerator: React.FC<AICardGeneratorProps> = ({ onGenerate }) => {
               ) : (
                 <AlertCircle className="w-3 h-3 mr-1" />
               )}
-              {providerInfo.provider === 'openai' ? 'OpenAI' : 'Enhanced Mock AI'}
+              {providerInfo.provider}
             </div>
           )}
         </CardTitle>
         <CardDescription className="text-white/80">
-          Let AI create a professional business card for you
-          {providerInfo?.provider === 'openai' && providerInfo.model && (
+          Let AI create a professional business card for you with maximum accuracy
+          {providerInfo?.model && (
             <span className="block text-xs mt-1 opacity-75">
-              Powered by {providerInfo.model}
+              Powered by {providerInfo.model} • 100% OpenAI API
             </span>
           )}
         </CardDescription>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AIService } from '@/lib/aiService-simple';
+import { aiService } from '@/lib/aiService';
 import { CheckCircle, AlertCircle, Settings, RefreshCw } from "lucide-react";
 
 const AIServiceTest: React.FC = () => {
-  const [aiService] = useState(() => new AIService());
+  // Using the imported aiService instance
   const [testResult, setTestResult] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTest, setSelectedTest] = useState(0);
