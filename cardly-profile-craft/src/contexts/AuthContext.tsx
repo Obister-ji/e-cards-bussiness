@@ -140,13 +140,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     try {
+      // Get the correct redirect URL for production
+      const getRedirectUrl = () => {
+        const currentUrl = window.location.origin;
+        // For production, ensure we use the correct domain
+        if (currentUrl.includes('vercel.app') || currentUrl.includes('cardlyy')) {
+          return currentUrl;
+        }
+        // For localhost development
+        return currentUrl;
+      };
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin
+          redirectTo: getRedirectUrl()
         }
       });
-      
+
       if (error) {
         toast({
           title: "Google sign in failed",
@@ -163,13 +174,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithMicrosoft = async () => {
     try {
+      // Get the correct redirect URL for production
+      const getRedirectUrl = () => {
+        const currentUrl = window.location.origin;
+        // For production, ensure we use the correct domain
+        if (currentUrl.includes('vercel.app') || currentUrl.includes('cardlyy')) {
+          return currentUrl;
+        }
+        // For localhost development
+        return currentUrl;
+      };
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'azure',
         options: {
-          redirectTo: window.location.origin
+          redirectTo: getRedirectUrl()
         }
       });
-      
+
       if (error) {
         toast({
           title: "Microsoft sign in failed",
