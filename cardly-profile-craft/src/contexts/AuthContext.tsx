@@ -140,25 +140,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     try {
-      // Get the correct redirect URL for production
+      // Force production URL for Vercel deployment
       const getRedirectUrl = () => {
         const currentUrl = window.location.origin;
-        // For production, ensure we use the correct domain
+        console.log('🔍 Current URL:', currentUrl);
+
+        // Force production URL if we're on Vercel
         if (currentUrl.includes('vercel.app') || currentUrl.includes('cardlyy')) {
-          return currentUrl;
+          const productionUrl = 'https://cardlyy-obister-jis-projects.vercel.app';
+          console.log('🚀 Using production redirect URL:', productionUrl);
+          return productionUrl;
         }
+
         // For localhost development
+        console.log('🔧 Using localhost redirect URL:', currentUrl);
         return currentUrl;
       };
+
+      const redirectUrl = getRedirectUrl();
+      console.log('🔗 Final redirect URL:', redirectUrl);
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: getRedirectUrl()
+          redirectTo: redirectUrl
         }
       });
 
       if (error) {
+        console.error('❌ Google OAuth error:', error);
         toast({
           title: "Google sign in failed",
           description: error.message,
@@ -174,25 +184,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithMicrosoft = async () => {
     try {
-      // Get the correct redirect URL for production
+      // Force production URL for Vercel deployment
       const getRedirectUrl = () => {
         const currentUrl = window.location.origin;
-        // For production, ensure we use the correct domain
+        console.log('🔍 Current URL:', currentUrl);
+
+        // Force production URL if we're on Vercel
         if (currentUrl.includes('vercel.app') || currentUrl.includes('cardlyy')) {
-          return currentUrl;
+          const productionUrl = 'https://cardlyy-obister-jis-projects.vercel.app';
+          console.log('🚀 Using production redirect URL:', productionUrl);
+          return productionUrl;
         }
+
         // For localhost development
+        console.log('🔧 Using localhost redirect URL:', currentUrl);
         return currentUrl;
       };
+
+      const redirectUrl = getRedirectUrl();
+      console.log('🔗 Final redirect URL:', redirectUrl);
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'azure',
         options: {
-          redirectTo: getRedirectUrl()
+          redirectTo: redirectUrl
         }
       });
 
       if (error) {
+        console.error('❌ Microsoft OAuth error:', error);
         toast({
           title: "Microsoft sign in failed",
           description: error.message,

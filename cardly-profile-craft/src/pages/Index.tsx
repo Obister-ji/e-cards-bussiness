@@ -318,42 +318,88 @@ const Index = () => {
           </p>
         </header>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-5xl mx-auto">
-          <TabsList className={`grid w-full ${userIsAdmin ? 'grid-cols-5' : 'grid-cols-3'} mb-10 bg-white dark:bg-slate-800 p-1 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700`}>
-            <TabsTrigger value="create" className="text-base font-medium py-2.5 data-[state=active]:bg-primary data-[state=active]:text-white">
-              {isEditing ? "Edit Card" : "Create Card"}
-            </TabsTrigger>
-            <TabsTrigger value="ai-generator" className="text-base font-medium py-2.5 data-[state=active]:bg-primary data-[state=active]:text-white">
-              <Sparkles className="mr-1 h-4 w-4" /> AI Generator
-            </TabsTrigger>
-            {userIsAdmin && (
-              <TabsTrigger value="ai-test" className="text-base font-medium py-2.5 data-[state=active]:bg-primary data-[state=active]:text-white">
-                AI Test
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-7xl mx-auto">
+          {/* Premium Mobile-Optimized Tab Navigation */}
+          <div className="mb-8 md:mb-12">
+            <TabsList className={`grid w-full ${userIsAdmin ? 'grid-cols-2 md:grid-cols-5' : 'grid-cols-2 md:grid-cols-3'} gap-2 md:gap-0 bg-gradient-to-r from-white via-slate-50/80 to-white dark:from-slate-900 dark:via-slate-800/80 dark:to-slate-900 p-2 md:p-1 rounded-2xl md:rounded-xl shadow-lg border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-xl`}>
+              <TabsTrigger
+                value="create"
+                className="text-sm md:text-base font-medium py-3 md:py-2.5 px-2 md:px-4 rounded-xl md:rounded-md data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 hover:scale-105 md:hover:scale-100"
+              >
+                <span className="hidden md:inline">{isEditing ? "Edit Card" : "Create Card"}</span>
+                <span className="md:hidden">✏️ {isEditing ? "Edit" : "Create"}</span>
               </TabsTrigger>
-            )}
-            {userIsAdmin && (
-              <TabsTrigger value="share-test" className="text-base font-medium py-2.5 data-[state=active]:bg-primary data-[state=active]:text-white">
-                Share Test
+              <TabsTrigger
+                value="ai-generator"
+                className="text-sm md:text-base font-medium py-3 md:py-2.5 px-2 md:px-4 rounded-xl md:rounded-md data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 hover:scale-105 md:hover:scale-100"
+              >
+                <Sparkles className="mr-1 h-4 w-4" />
+                <span className="hidden md:inline">AI Generator</span>
+                <span className="md:hidden">AI</span>
               </TabsTrigger>
-            )}
-            <TabsTrigger value="cards" className="text-base font-medium py-2.5 data-[state=active]:bg-primary data-[state=active]:text-white">
-              Your Cards
-            </TabsTrigger>
-          </TabsList>
+              {userIsAdmin && (
+                <TabsTrigger
+                  value="ai-test"
+                  className="text-sm md:text-base font-medium py-3 md:py-2.5 px-2 md:px-4 rounded-xl md:rounded-md data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 hover:scale-105 md:hover:scale-100 col-span-2 md:col-span-1"
+                >
+                  <span className="hidden md:inline">AI Test</span>
+                  <span className="md:hidden">🧪 AI Test</span>
+                </TabsTrigger>
+              )}
+              {userIsAdmin && (
+                <TabsTrigger
+                  value="share-test"
+                  className="text-sm md:text-base font-medium py-3 md:py-2.5 px-2 md:px-4 rounded-xl md:rounded-md data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 hover:scale-105 md:hover:scale-100 col-span-2 md:col-span-1"
+                >
+                  <span className="hidden md:inline">Share Test</span>
+                  <span className="md:hidden">📤 Share Test</span>
+                </TabsTrigger>
+              )}
+              <TabsTrigger
+                value="cards"
+                className={`text-sm md:text-base font-medium py-3 md:py-2.5 px-2 md:px-4 rounded-xl md:rounded-md data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 hover:scale-105 md:hover:scale-100 ${userIsAdmin ? 'col-span-2 md:col-span-1' : ''}`}
+              >
+                <span className="hidden md:inline">Your Cards</span>
+                <span className="md:hidden">📋 Cards</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="create" className="space-y-6">
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-premium rounded-xl overflow-hidden">
-              <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-6">
-                <CardTitle className="text-2xl font-montserrat text-slate-900 dark:text-white">
-                  {isEditing ? "Edit Your Business Card" : "Create a New Business Card"}
-                </CardTitle>
-                <CardDescription className="text-slate-500 dark:text-slate-400 mt-1">
-                  Fill in your details to {isEditing ? "update your" : "create a"} professional digital business card.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div className="space-y-6">
+            {/* Premium Mobile-First Card Creation */}
+            <div className="bg-gradient-to-br from-white via-slate-50/30 to-white dark:from-slate-900 dark:via-slate-800/30 dark:to-slate-900 border border-slate-200/50 dark:border-slate-700/50 shadow-2xl rounded-3xl md:rounded-2xl overflow-hidden backdrop-blur-xl">
+              {/* Premium Header with Mobile Optimization */}
+              <div className="relative border-b border-slate-200/30 dark:border-slate-700/30 bg-gradient-to-r from-slate-50/50 to-white/50 dark:from-slate-800/50 dark:to-slate-900/50">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.05),transparent_50%)]"></div>
+                <div className="relative px-6 md:px-8 py-6 md:py-8">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
+                    <div className="space-y-2">
+                      <h2 className="text-2xl md:text-3xl font-light text-slate-900 dark:text-white tracking-tight">
+                        {isEditing ? "✏️ Edit Your Card" : "✨ Create New Card"}
+                      </h2>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base">
+                        {isEditing ? "Update your professional details" : "Fill in your details to create a professional digital business card"}
+                      </p>
+                    </div>
+
+                    {/* Mobile Progress Indicator */}
+                    <div className="flex md:hidden items-center space-x-2">
+                      <div className="flex items-center space-x-1">
+                        <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        <div className="w-2 h-2 bg-slate-300 dark:bg-slate-600 rounded-full"></div>
+                        <div className="w-2 h-2 bg-slate-300 dark:bg-slate-600 rounded-full"></div>
+                      </div>
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Step 1 of 3</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Premium Content Area */}
+              <div className="p-6 md:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                  {/* Form Section - Mobile First */}
+                  <div className="order-2 lg:order-1 space-y-6">
                     <CardForm
                       initialData={currentCard}
                       onSubmit={handleSaveCard}
@@ -372,30 +418,31 @@ const Index = () => {
                     />
                   </div>
 
-                  <div className="hidden md:block">
-                    <div className="space-y-4">
-                      {/* Luxury Preview Header */}
-                      <div className="mb-8">
-                        <div className="flex items-center justify-between">
+                  {/* Preview Section - Desktop Only */}
+                  <div className="order-1 lg:order-2 hidden lg:block">
+                    <div className="sticky top-8 space-y-6">
+                      {/* Premium Preview Header */}
+                      <div className="bg-gradient-to-r from-slate-50/50 to-white/50 dark:from-slate-800/50 dark:to-slate-900/50 rounded-2xl p-6 border border-slate-200/30 dark:border-slate-700/30">
+                        <div className="flex items-center justify-between mb-6">
                           <div className="flex items-center space-x-3">
-                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                            <div className="w-3 h-3 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full shadow-lg shadow-emerald-500/30 animate-pulse"></div>
+                            <h3 className="text-xl font-light text-slate-900 dark:text-white tracking-tight">
                               Live Preview
                             </h3>
-                            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                           </div>
 
-                          {/* Clean Device Switcher */}
-                          <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1" role="tablist" aria-label="Preview mode selector">
+                          {/* Premium Device Switcher */}
+                          <div className="flex items-center bg-white/80 dark:bg-slate-800/80 rounded-xl p-1 shadow-lg border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-sm" role="tablist" aria-label="Preview mode selector">
                             <button
                               onClick={() => setPreviewMode("mobile")}
                               role="tab"
                               aria-selected={previewMode === "mobile"}
                               aria-label="Switch to mobile preview"
                               title="View mobile preview"
-                              className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                              className={`flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                                 previewMode === "mobile"
-                                  ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
-                                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                                  ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-lg transform scale-105"
+                                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-700/50"
                               }`}
                             >
                               <Smartphone className="w-4 h-4 mr-2" aria-hidden="true" />
@@ -407,10 +454,10 @@ const Index = () => {
                               aria-selected={previewMode === "desktop"}
                               aria-label="Switch to desktop preview"
                               title="View desktop preview"
-                              className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                              className={`flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                                 previewMode === "desktop"
-                                  ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
-                                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                                  ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-lg transform scale-105"
+                                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-700/50"
                               }`}
                             >
                               <Monitor className="w-4 h-4 mr-2" aria-hidden="true" />
@@ -418,114 +465,113 @@ const Index = () => {
                             </button>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Preview Container with Device Frame */}
-                      <div className="flex justify-center">
-                        <div className={`relative transition-all duration-300 ${
-                          previewMode === "mobile"
-                            ? "w-full max-w-md"
-                            : "w-full max-w-[480px]"
-                        }`}>
-                          {/* Mobile Device Frame */}
-                          {previewMode === "mobile" ? (
-                            <div className="relative mx-auto" style={{ width: "300px", height: "600px" }}>
-                              {/* Phone Frame */}
-                              <div className="absolute inset-0 bg-slate-900 rounded-[2.5rem] shadow-2xl">
-                                {/* Screen Area */}
-                                <div className="absolute inset-4 bg-black rounded-[1.8rem] overflow-hidden">
-                                  {/* Status Bar */}
-                                  <div className="absolute top-0 left-0 right-0 h-10 bg-black z-20 flex items-center justify-between px-6">
-                                    <div className="flex items-center space-x-1">
-                                      <div className="text-white text-sm font-medium">9:41</div>
-                                    </div>
-                                    <div className="flex items-center space-x-1">
-                                      <div className="w-4 h-2 bg-white rounded-sm opacity-60"></div>
-                                      <div className="w-1 h-2 bg-white rounded-sm opacity-60"></div>
-                                      <div className="w-6 h-3 border border-white rounded-sm opacity-60 relative">
-                                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-white rounded-r-sm"></div>
+                        {/* Premium Preview Container */}
+                        <div className="relative">
+                          <div className={`transition-all duration-500 ${
+                            previewMode === "mobile"
+                              ? "flex justify-center"
+                              : "w-full"
+                          }`}>
+                            {/* Mobile Device Frame */}
+                            {previewMode === "mobile" ? (
+                              <div className="relative" style={{ width: "280px", height: "560px" }}>
+                                {/* Premium Phone Frame */}
+                                <div className="absolute inset-0 bg-gradient-to-b from-slate-800 to-slate-900 rounded-[2.5rem] shadow-2xl">
+                                  {/* Screen Area */}
+                                  <div className="absolute inset-3 bg-black rounded-[2rem] overflow-hidden">
+                                    {/* Status Bar */}
+                                    <div className="absolute top-0 left-0 right-0 h-8 bg-black z-20 flex items-center justify-between px-4">
+                                      <div className="text-white text-xs font-medium">9:41</div>
+                                      <div className="flex items-center space-x-1">
+                                        <div className="w-3 h-1.5 bg-white rounded-sm opacity-60"></div>
+                                        <div className="w-4 h-2 border border-white rounded-sm opacity-60"></div>
                                       </div>
                                     </div>
-                                  </div>
 
-                                  {/* Card Content Area */}
-                                  <div className="absolute top-10 left-0 right-0 bottom-8 bg-white overflow-hidden">
-                                    <div className="h-full overflow-y-auto scrollbar-hide">
-                                      <div className="w-full">
-                                        <div className="transform scale-[1.1] origin-top -mt-2 w-full">
-                                          {isEditing ? (
-                                            <CardPreview card={currentCard || previewCard} />
-                                          ) : (
-                                            <CardPreview card={previewCard} />
-                                          )}
+                                    {/* Card Content Area */}
+                                    <div className="absolute top-8 left-0 right-0 bottom-6 bg-white overflow-hidden">
+                                      <div className="h-full overflow-y-auto scrollbar-hide">
+                                        <div className="w-full">
+                                          <div className="transform scale-[0.9] origin-top -mt-2 w-full">
+                                            {isEditing ? (
+                                              <CardPreview card={currentCard || previewCard} />
+                                            ) : (
+                                              <CardPreview card={previewCard} />
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
+
+                                    {/* Home Indicator */}
+                                    <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-white rounded-full opacity-60"></div>
                                   </div>
 
-                                  {/* Home Indicator */}
-                                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-white rounded-full opacity-60"></div>
+                                  {/* Phone Details */}
+                                  <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-slate-600 rounded-full"></div>
+                                </div>
+                              </div>
+                            ) : (
+                              /* Premium Desktop Frame */
+                              <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
+                                {/* Browser Header */}
+                                <div className="flex items-center space-x-3 p-4 bg-gradient-to-r from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 border-b border-slate-200/50 dark:border-slate-700/50">
+                                  <div className="flex items-center space-x-2">
+                                    <div className="w-3 h-3 bg-red-500 rounded-full shadow-sm"></div>
+                                    <div className="w-3 h-3 bg-yellow-500 rounded-full shadow-sm"></div>
+                                    <div className="w-3 h-3 bg-green-500 rounded-full shadow-sm"></div>
+                                  </div>
+                                  <div className="flex-1 bg-white dark:bg-slate-700 rounded-lg h-7 ml-4 flex items-center px-4 border border-slate-200 dark:border-slate-600">
+                                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">cardly.app/@your-card</span>
+                                  </div>
                                 </div>
 
-                                {/* Phone Details */}
-                                <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-slate-700 rounded-full"></div>
-                                <div className="absolute top-8 right-8 w-2 h-2 bg-slate-700 rounded-full"></div>
+                                {/* Desktop Content */}
+                                <div className="p-8">
+                                  {isEditing ? (
+                                    <CardPreview card={currentCard || previewCard} />
+                                  ) : (
+                                    <CardPreview card={previewCard} />
+                                  )}
+                                </div>
                               </div>
+                            )}
+                          </div>
+
+                          {/* Premium Preview Mode Label */}
+                          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+                            <div className="bg-gradient-to-r from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 px-4 py-2 rounded-full shadow-lg border border-slate-200/50 dark:border-slate-700/50">
+                              <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                                {previewMode === "mobile" ? "📱 Mobile Experience" : "🖥️ Desktop Experience"}
+                              </span>
                             </div>
-                          ) : (
-                            /* Desktop Frame */
-                            <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700">
-                              {/* Browser Header */}
-                              <div className="flex items-center space-x-2 p-4 bg-slate-100 dark:bg-slate-800 rounded-t-lg border-b border-slate-200 dark:border-slate-700">
-                                <div className="flex items-center space-x-2">
-                                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                </div>
-                                <div className="flex-1 bg-white dark:bg-slate-700 rounded h-6 ml-4 flex items-center px-3">
-                                  <span className="text-xs text-slate-500 dark:text-slate-400">cardly.app/@your-card</span>
-                                </div>
-                              </div>
-
-                              {/* Desktop Content */}
-                              <div className="p-8">
-                                {isEditing ? (
-                                  <CardPreview card={currentCard || previewCard} />
-                                ) : (
-                                  <CardPreview card={previewCard} />
-                                )}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Clean Preview Mode Label */}
-                          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-                            <span className="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full">
-                              {previewMode === "mobile" ? "📱 Mobile View" : "🖥️ Desktop View"}
-                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Mobile Preview Section */}
-                  <div className="md:hidden mt-8">
-                    <div className="space-y-4">
+                  {/* Premium Mobile Preview Section */}
+                  <div className="lg:hidden order-1 lg:order-2 mb-8">
+                    <div className="bg-gradient-to-r from-slate-50/50 to-white/50 dark:from-slate-800/50 dark:to-slate-900/50 rounded-2xl p-6 border border-slate-200/30 dark:border-slate-700/30">
                       {/* Mobile Preview Header */}
-                      <div className="flex items-center justify-center">
-                        <h3 className="text-lg font-semibold text-primary">📱 Mobile Preview</h3>
+                      <div className="flex items-center justify-center mb-6">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-3 h-3 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full shadow-lg shadow-emerald-500/30 animate-pulse"></div>
+                          <h3 className="text-lg font-light text-slate-900 dark:text-white tracking-tight">Live Preview</h3>
+                        </div>
                       </div>
 
-                      {/* Mobile Preview Container */}
+                      {/* Premium Mobile Preview Container */}
                       <div className="flex justify-center">
-                        <div className="relative" style={{ width: "200px", height: "400px" }}>
-                          {/* Phone Frame */}
-                          <div className="absolute inset-0 bg-slate-900 rounded-[2rem] shadow-2xl">
+                        <div className="relative" style={{ width: "220px", height: "440px" }}>
+                          {/* Premium Phone Frame */}
+                          <div className="absolute inset-0 bg-gradient-to-b from-slate-800 to-slate-900 rounded-[2.5rem] shadow-2xl">
                             {/* Screen Area */}
-                            <div className="absolute inset-2 bg-black rounded-[1.3rem] overflow-hidden">
+                            <div className="absolute inset-2 bg-black rounded-[2rem] overflow-hidden">
                               {/* Status Bar */}
-                              <div className="absolute top-0 left-0 right-0 h-6 bg-black z-20 flex items-center justify-between px-3">
+                              <div className="absolute top-0 left-0 right-0 h-7 bg-black z-20 flex items-center justify-between px-4">
                                 <div className="text-white text-xs font-medium">9:41</div>
                                 <div className="flex items-center space-x-1">
                                   <div className="w-3 h-1.5 bg-white rounded-sm opacity-60"></div>
@@ -534,10 +580,10 @@ const Index = () => {
                               </div>
 
                               {/* Card Content Area */}
-                              <div className="absolute top-6 left-0 right-0 bottom-4 bg-white overflow-hidden">
+                              <div className="absolute top-7 left-0 right-0 bottom-5 bg-white overflow-hidden">
                                 <div className="h-full overflow-y-auto scrollbar-hide">
                                   <div className="w-full">
-                                    <div className="transform scale-[0.8] origin-top -mt-4 w-full">
+                                    <div className="transform scale-[0.7] origin-top -mt-4 w-full">
                                       {isEditing ? (
                                         <CardPreview card={currentCard || previewCard} />
                                       ) : (
@@ -549,19 +595,26 @@ const Index = () => {
                               </div>
 
                               {/* Home Indicator */}
-                              <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-white rounded-full opacity-60"></div>
+                              <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-white rounded-full opacity-60"></div>
                             </div>
 
                             {/* Phone Details */}
-                            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-slate-700 rounded-full"></div>
+                            <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-slate-600 rounded-full"></div>
                           </div>
+                        </div>
+                      </div>
+
+                      {/* Mobile Preview Label */}
+                      <div className="flex justify-center mt-4">
+                        <div className="bg-gradient-to-r from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 px-4 py-2 rounded-full shadow-lg border border-slate-200/50 dark:border-slate-700/50">
+                          <span className="text-xs font-medium text-slate-600 dark:text-slate-400">📱 Mobile Experience</span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="ai-generator" className="space-y-6">
